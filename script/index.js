@@ -13,7 +13,13 @@ const loadLevelWord = (id) => {
     console.log(url)
     fetch(url)
         .then(res => res.json())
-        .then(data => displayLevelWord(data.data))
+        // .then(data => displayLevelWord(data.data))     //⭕changed
+        .then(data =>{
+            const clickBtn = document.getElementById(`lesson-btn-${id}`)
+            // console.log(clickBtn)
+            clickBtn.classList.add('active')
+             displayLevelWord(data.data)
+        })
 };
 // { id: 19, level: 1, word: "Sincere", meaning: "সত্‍ / আন্তরিক", pronunciation: "সিনসিয়ার" }
 
@@ -85,7 +91,7 @@ const displayLessons = (lessons) => {
         const btnDiv = document.createElement('div')
         btnDiv.innerHTML = `
         
-                    <button onclick="loadLevelWord(${lesson.level_no})" class="btn btn-outline btn-primary">
+                    <button id="lesson-btn-${lesson.level_no}" onclick="loadLevelWord(${lesson.level_no})" class="btn btn-outline btn-primary">
                      <i class="fa-solid fa-book-open"></i> Lesson - ${lesson.level_no}
                     </button>
                         
