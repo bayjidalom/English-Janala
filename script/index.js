@@ -15,22 +15,39 @@ const loadLevelWord = (id) => {
         .then(res => res.json())
         .then(data => displayLevelWord(data.data))
 };
+// { id: 19, level: 1, word: "Sincere", meaning: "সত্‍ / আন্তরিক", pronunciation: "সিনসিয়ার" }
 
 const displayLevelWord = (words) => {
     const wordContainer = document.getElementById("word-container")
     wordContainer.innerHTML = "";
-    // { id: 19, level: 1, word: "Sincere", meaning: "সত্‍ / আন্তরিক", pronunciation: "সিনসিয়ার" }
+
+
+    // ➡️ button related work
+    if (words.length == 0) {
+        // alert("No Word detected");
+        wordContainer.innerHTML = `
+        <div class="font-bangla text-center bg-[#F8F8F8] col-span-full rounded-xl py-10 space-y-6">
+        <img class="mx-auto text-gray-500" src="./assets/alert-error.png" alt="">
+            <p class="text-xl font-medium text-gray-500 ">
+               এই Lesson এ এখনো কোন Vocabulary যুক্ত করা হয়নি।
+            </p>
+            <h2 class="text-4xl font-bold">নেক্সট Lesson এ যান।</h2>
+        </div>
+        
+        `;
+
+        // return;
+    }
 
     words.forEach(word => {
-        console.log(word)
         console.log(word)
         const card = document.createElement('div');
         card.innerHTML = `
         <div class="bg-white rounded-xl shadow-sm text-center py-10 px-5 space-y-4">
-            <h2 class="text-2xl font-bold">${word.word}</h2>
+            <h2 class="text-2xl font-bold">${word.word ? word.word : "Can't found!"}</h2>
             <p class="font-semibold ">Meaning /Pronounciation</p>
 
-            <div class="font-bangla text-2xl font-medium">${word.meaning}/${word.pronunciation}</div>
+            <div class="font-bangla text-2xl font-medium">${word.meaning? word.meaning : "Meaning not found!"}/${word.pronunciation? word.pronunciation : "Pronunciation not found!"}</div>
 
             <div class="flex justify-between items-center">
 
