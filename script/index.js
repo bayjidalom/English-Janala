@@ -3,6 +3,13 @@ const loadLessons = () => {
     fetch("https://openapi.programming-hero.com/api/levels/all")   // promise of response
         .then(res => res.json())                // promise of json data
         .then((json) => displayLessons(json.data))
+}
+
+
+const removeActive = () => {
+    const lessonButtons = document.querySelectorAll(".lesson-btn");
+    // console.log(lessonButtons)
+    lessonButtons.forEach(btn => btn.classList.remove("active"))
 
 }
 
@@ -13,12 +20,15 @@ const loadLevelWord = (id) => {
     console.log(url)
     fetch(url)
         .then(res => res.json())
-        // .then(data => displayLevelWord(data.data))     //⭕changed
-        .then(data =>{
+        // .then(data => displayLevelWord(data.data))     //⭕changed   -> nicher line e ache
+        .then(data => {
+
+            removeActive();          //⭕ remove all active class
+
             const clickBtn = document.getElementById(`lesson-btn-${id}`)
             // console.log(clickBtn)
-            clickBtn.classList.add('active')
-             displayLevelWord(data.data)
+            clickBtn.classList.add('active')             // ⭕add active class
+            displayLevelWord(data.data)
         })
 };
 // { id: 19, level: 1, word: "Sincere", meaning: "সত্‍ / আন্তরিক", pronunciation: "সিনসিয়ার" }
@@ -53,11 +63,11 @@ const displayLevelWord = (words) => {
             <h2 class="text-2xl font-bold">${word.word ? word.word : "Can't found!"}</h2>
             <p class="font-semibold ">Meaning /Pronounciation</p>
 
-            <div class="font-bangla text-2xl font-medium">${word.meaning? word.meaning : "Meaning not found!"}/${word.pronunciation? word.pronunciation : "Pronunciation not found!"}</div>
+            <div class="font-bangla text-2xl font-medium">${word.meaning ? word.meaning : "Meaning not found!"}/${word.pronunciation ? word.pronunciation : "Pronunciation not found!"}</div>
 
             <div class="flex justify-between items-center">
 
-                <button class="btn bg-[#1A91FF10] hover:bg-[#1A91FF80]">
+                <button onclick="my_modal_5.showModal()" class="btn bg-[#1A91FF10] hover:bg-[#1A91FF80]">
                     <i class="fa-solid fa-circle-info"></i>
                 </button>
 
@@ -91,7 +101,7 @@ const displayLessons = (lessons) => {
         const btnDiv = document.createElement('div')
         btnDiv.innerHTML = `
         
-                    <button id="lesson-btn-${lesson.level_no}" onclick="loadLevelWord(${lesson.level_no})" class="btn btn-outline btn-primary">
+                    <button id="lesson-btn-${lesson.level_no}" onclick="loadLevelWord(${lesson.level_no})" class="btn btn-outline btn-primary lesson-btn">
                      <i class="fa-solid fa-book-open"></i> Lesson - ${lesson.level_no}
                     </button>
                         
