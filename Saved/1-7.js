@@ -9,9 +9,7 @@ const loadLessons = () => {
 const removeActive = () => {
     const lessonButtons = document.querySelectorAll(".lesson-btn");
     // console.log(lessonButtons)
-    // lessonButtons.classList.remove('active')      //⭕ Not working cz , for every button
     lessonButtons.forEach(btn => btn.classList.remove("active"))
-
 
 }
 
@@ -34,60 +32,6 @@ const loadLevelWord = (id) => {
         })
 };
 // { id: 19, level: 1, word: "Sincere", meaning: "সত্‍ / আন্তরিক", pronunciation: "সিনসিয়ার" }
-
-
-const loadWordDetail = async (id) => {
-    const url = `https://openapi.programming-hero.com/api/word/${id}`
-    console.log(url)
-    const res = await fetch(url)
-    const details = await res.json()
-    diplayWordDetails(details.data)
-}
-
-// "status": true,
-// "message": "successfully fetched a word details",
-// "data": {
-// "word": "Brisk",
-// "meaning": "চটপটে / দ্রুত",
-// "pronunciation": "ব্রিস্ক",
-// "level": 3,
-// "sentence": "He took a brisk walk in the morning.",
-// "points": 3,
-// "partsOfSpeech": "adjective",
-// "synonyms": [
-// "quick",
-// "energetic"
-// ],
-// "id": 27 
-const diplayWordDetails = (word) => {
-    console.log(word)
-    const detailsBox = document.getElementById("details-container")
-    detailsBox.innerHTML = ` 
-                <div>
-                    <h2 class="text-2xl font-bold">
-                        ${word.word} ( <i class="fa-solid fa-microphone-lines"></i> :${word.pronunciation})
-                    </h2>
-                </div>
-
-                <div class="">
-                    <h2 class=" font-bold">Meaning</h2>
-                    <p> ${word.meaning}</p>
-                </div>
-                <div class="">
-                    <h2 class=" font-bold">Example</h2>
-                    <p> ${word.sentence}</p>
-                </div>
-                <div class="">
-                    <h2 class=" font-bold">সমার্থক শব্দ গুলো</h2>
-                   <span class="btn"> Button demo</span>
-                   <span class="btn"> Button demo</span>
-                   <span class="btn"> Button demo</span>
-                </div>
-    
-    `;
-    document.getElementById("word_modal").showModal()
-
-}
 
 const displayLevelWord = (words) => {
     const wordContainer = document.getElementById("word-container")
@@ -113,17 +57,17 @@ const displayLevelWord = (words) => {
 
     words.forEach(word => {
         console.log(word)
-        const card = document.createElement('div');
+        const card = document.createElement('div'); 
         card.innerHTML = ` 
         <div class="bg-white rounded-xl shadow-sm text-center py-10 px-5 space-y-4">
-            <h2 class="text-2xl font-bold">${word.word ? word.word : "শব্দ পাওয়া যায়নি!"}</h2>
+            <h2 class="text-2xl font-bold">${word.word ? word.word : "Can't found!"}</h2>
             <p class="font-semibold ">Meaning /Pronounciation</p>
 
-            <div class="font-bangla text-2xl font-medium">${word.meaning ? word.meaning : "অর্থ পাওয়া যায়নি!"}/${word.pronunciation ? word.pronunciation : "Pronunciation পাওয়া যায়নি!"}</div>
+            <div class="font-bangla text-2xl font-medium">${word.meaning ? word.meaning : "Meaning not found!"}/${word.pronunciation ? word.pronunciation : "Pronunciation not found!"}</div>
 
             <div class="flex justify-between items-center">
-            
-                <button onclick="loadWordDetail(${word.id})" class="btn bg-[#1A91FF10] hover:bg-[#1A91FF80]">
+
+                <button onclick="my_modal_5.showModal()" class="btn bg-[#1A91FF10] hover:bg-[#1A91FF80]">
                     <i class="fa-solid fa-circle-info"></i>
                 </button>
 
